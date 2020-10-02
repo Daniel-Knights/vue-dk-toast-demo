@@ -3,7 +3,7 @@
 
 	<code id="code-preview">
 		<pre>
-    this.$toast({{ text }}, {
+    this.$toast('{{ text }}', {
         duration: {{ duration }},
         styles: {
             <div id="preview-styles">
