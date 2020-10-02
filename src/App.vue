@@ -45,14 +45,21 @@
 	<div id="icon" class="property">
 		<label>Slot:</label>
 		<textarea v-model="slot" :class="{ valid: valid, invalid: valid === false }" />
-		<small
-			>Any valid HTML can go here. Fontawesome and Material Icons are loaded into this demo, give it
+		<p>
+			Any valid HTML can go here. Fontawesome and Material Icons are loaded into this demo, give it
 			a try:
-			<pre @click="copyIcon(0)">&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</pre>
-			<pre @click="copyIcon(1)">&lt;span class="material-icons">thumb_up&lt;/span></pre>
-			Note: <code>&lt;span&gt;</code> and <code>&lt;i&gt;</code> are
-			<code>position: absolute;</code> by default.
-		</small>
+			<code @click="copyIcon(0)" class="icon-examples"
+				>&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
+			>
+			<code @click="copyIcon(1)" class="icon-examples"
+				>&lt;span class="material-icons">thumb_up&lt;/span></code
+			>
+			<small>
+				Note: <code class="code-note">&lt;span&gt;</code> and
+				<code class="code-note">&lt;i&gt;</code> are
+				<code class="code-note">position: absolute;</code> by default.
+			</small>
+		</p>
 	</div>
 	<button @click="toast()" id="create-toast">Create Toast</button>
 </template>
@@ -125,13 +132,12 @@ input,
 textarea {
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	border-radius: 2px;
+	resize: vertical;
 }
-
 button,
 [type='submit'] {
 	cursor: pointer;
 }
-
 input,
 button {
 	font: 18px Avenir, Helvetica, Arial, sans-serif;
@@ -166,7 +172,6 @@ label {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-
 #code-preview pre {
 	margin: 0;
 }
@@ -191,34 +196,41 @@ label {
 	align-items: center;
 	width: 100%;
 }
-
 #duration-slider input {
 	cursor: pointer;
 	flex: 1;
 }
 
-small {
+p {
 	margin-top: 10px;
 }
-
-small pre {
+p .icon-examples {
 	cursor: pointer;
+	display: block;
+	white-space: pre-wrap;
 	margin: 10px auto;
-	width: 340px;
+	max-width: 340px;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	border-radius: 5px;
 }
-
-small pre:hover {
-	color: #fff;
+p .icon-examples:hover {
+	color: #6db8f5;
 	background: rgba(0, 0, 0, 0.8);
+}
+p .code-note {
+	padding: 2px 5px;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #6db8f5;
+	border-radius: 5px;
 }
 
 #styles [type='submit'] {
 	margin: 10px auto;
 	width: 150px;
 }
-
+#styles-inputs input {
+	width: 44%;
+}
 #code-styles {
 	display: flex;
 	justify-content: center;
@@ -235,11 +247,9 @@ small pre:hover {
 	width: 50%;
 	padding: 2px;
 }
-
 .code-style code {
 	width: 100%;
 }
-
 .code-style i {
 	cursor: pointer;
 	position: absolute;
@@ -257,8 +267,13 @@ small pre:hover {
 .invalid {
 	border: 1px solid #ff0000;
 }
-
 .valid {
 	border: 1px solid #90ee90;
+}
+
+@media only screen and (max-width: 950px) {
+	#code-preview {
+		display: none;
+	}
 }
 </style>
