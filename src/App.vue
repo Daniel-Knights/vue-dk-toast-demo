@@ -50,6 +50,8 @@
 			a try:
 			<pre @click="copyIcon(0)">&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</pre>
 			<pre @click="copyIcon(1)">&lt;span class="material-icons">thumb_up&lt;/span></pre>
+			Note: <code>&lt;span&gt;</code> and <code>&lt;i&gt;</code> are
+			<code>position: absolute;</code> by default.
 		</small>
 	</div>
 	<button @click="toast()" id="create-toast">Create Toast</button>
