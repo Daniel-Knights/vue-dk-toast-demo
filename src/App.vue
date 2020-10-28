@@ -18,7 +18,7 @@
                 slotLeft: `
             </div>
             <div class="preview-values">{{ slots.left }}</div>
-            <div>`</div>
+            <div>`,</div>
             <div>
                 slotRight: `
             </div>
@@ -132,7 +132,8 @@ export default {
             });
         },
         copyCode(e) {
-            console.log(e.target.innerText);
+            navigator.clipboard.writeText(e.target.innerText);
+            this.$toast('Copied!');
         },
         copyIcon(library, pos) {
             this.slots[pos] =
@@ -195,19 +196,26 @@ label {
 }
 
 #code-preview {
+    cursor: pointer;
     position: fixed;
     text-align: left;
     top: 50%;
     left: 50px;
     transform: translateY(-50%);
-    max-width: calc((100vw - 680px) / 2);
+    max-width: calc((100vw - 700px) / 2);
     text-overflow: ellipsis;
     overflow: hidden;
+    padding: 10px;
+    border-radius: 5px;
 }
 #code-preview div {
     pointer-events: none;
     display: block;
     hyphens: auto;
+}
+#code-preview:hover {
+    color: #6db8f5;
+    background: rgba(0, 0, 0, 0.8);
 }
 .preview-inner {
     padding-left: 30px;
@@ -303,7 +311,7 @@ p .code-note {
 @media only screen and (max-width: 1140px) {
     #code-preview {
         left: 20px;
-        max-width: calc((100vw - 600px) / 2);
+        max-width: calc((100vw - 640px) / 2);
     }
 }
 @media only screen and (max-width: 950px) {
