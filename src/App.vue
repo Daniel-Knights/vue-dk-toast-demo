@@ -1,22 +1,33 @@
 <template>
     <h1>vue-dk-toast</h1>
 
-    <code id="code-preview">
-        <pre>
-    this.$toast('{{ text }}', {
-        duration: {{ duration }},
-        styles: {
-            <div id="preview-styles">
-            <div v-for="style in displayStyles" :key="style">{{ style }}</div>
+    <code id="code-preview" @click="copyCode($event)">
+        <div>this.$toast('{{ text }}', {</div>
+        <div class="preview-inner">
+            <div>duration: {{ duration }},</div>
+            <div>
+                styles: {
             </div>
-        },
-        slot: `<div id="preview-slot">{{ slot }}</div>
-    </pre>
-        <pre>
-        `
-    });
-    </pre
-        >
+            <div class="preview-values">
+                <div v-for="style in displayStyles" :key="style">{{ style }}</div>
+            </div>
+            <div>
+                },
+            </div>
+            <div>
+                slotLeft: `
+            </div>
+            <div class="preview-values">{{ slots.left }}</div>
+            <div>`</div>
+            <div>
+                slotRight: `
+            </div>
+            <div class="preview-values">{{ slots.right }}</div>
+            <div>`</div>
+        </div>
+        <div>
+            });
+        </div>
     </code>
 
     <div id="duration" class="property">
@@ -44,16 +55,16 @@
             </div>
         </div>
     </form>
-    <div id="icon" class="property">
-        <label>Slot:</label>
-        <textarea v-model="slot" :class="{ valid: valid, invalid: valid === false }" />
+    <div class="property">
+        <label>Slot-Left:</label>
+        <textarea v-model="slots.left" :class="{ valid: valid, invalid: valid === false }" />
         <p>
             Any valid HTML can go here. Fontawesome and Material Icons are loaded into this demo,
             give it a try:
-            <code @click="copyIcon(0)" class="icon-examples"
+            <code @click="copyIcon(0, 'left')" class="icon-examples"
                 >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
             >
-            <code @click="copyIcon(1)" class="icon-examples"
+            <code @click="copyIcon(1, 'left')" class="icon-examples"
                 >&lt;span class="material-icons">thumb_up&lt;/span></code
             >
             <small>
@@ -61,6 +72,19 @@
                 <code class="code-note">&lt;i&gt;</code> are
                 <code class="code-note">position: absolute;</code> by default.
             </small>
+        </p>
+    </div>
+    <div class="property">
+        <label>Slot-Right:</label>
+        <textarea v-model="slots.right" :class="{ valid: valid, invalid: valid === false }" />
+        <p>
+            Same as <code class="code-note">slotLeft</code> but positioned to the right
+            <code @click="copyIcon(0, 'right')" class="icon-examples"
+                >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
+            >
+            <code @click="copyIcon(1, 'right')" class="icon-examples"
+                >&lt;span class="material-icons">thumb_up&lt;/span></code
+            >
         </p>
     </div>
     <button @click="toast()" id="create-toast">Create Toast</button>
@@ -79,7 +103,10 @@ export default {
             styleProperty: '',
             styleValue: '',
             text: '',
-            slot: '',
+            slots: {
+                left: '',
+                right: '',
+            },
             valid: null,
         };
     },
@@ -94,18 +121,21 @@ export default {
 
     methods: {
         toast() {
-            if (!this.text && !this.slot) this.valid = false;
+            if (!this.text && !this.slots.left && !this.slots.right) this.valid = false;
             else this.valid = true;
 
             this.$toast(this.text, {
                 duration: this.duration,
                 styles: this.styles,
-                slot: this.slot,
+                slotLeft: this.slots.left,
+                slotRight: this.slots.right,
             });
-            console.log(this.styles);
         },
-        copyIcon(library) {
-            this.slot =
+        copyCode(e) {
+            console.log(e.target.innerText);
+        },
+        copyIcon(library, pos) {
+            this.slots[pos] =
                 library === 0
                     ? '<i class="fa fa-thumbs-up"></i>'
                     : '<span class="material-icons">thumb_up</span>';
@@ -168,28 +198,23 @@ label {
     position: fixed;
     text-align: left;
     top: 50%;
-    left: 0;
+    left: 50px;
     transform: translateY(-50%);
-    max-width: calc((100vw - 600px) / 2);
+    max-width: calc((100vw - 680px) / 2);
     text-overflow: ellipsis;
     overflow: hidden;
 }
-#code-preview pre {
-    margin: 0;
+#code-preview div {
+    pointer-events: none;
+    display: block;
+    hyphens: auto;
 }
-#code-preview pre:nth-of-type(2) {
-    margin-top: -26px;
+.preview-inner {
+    padding-left: 30px;
 }
-
-#preview-styles {
-    display: inline-flex;
-    flex-direction: column;
-}
-
-#preview-slot {
-    white-space: pre-line;
+.preview-values {
     max-width: 180px;
-    padding-left: 92px;
+    padding-left: 30px;
 }
 
 #duration-slider {
@@ -275,6 +300,12 @@ p .code-note {
     border: 1px solid #90ee90;
 }
 
+@media only screen and (max-width: 1140px) {
+    #code-preview {
+        left: 20px;
+        max-width: calc((100vw - 600px) / 2);
+    }
+}
 @media only screen and (max-width: 950px) {
     #code-preview {
         display: none;
