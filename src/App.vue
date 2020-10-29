@@ -103,10 +103,7 @@ export default {
             styleProperty: '',
             styleValue: '',
             text: '',
-            slots: {
-                left: '',
-                right: '',
-            },
+            slots: { left: '', right: '' },
             valid: null,
         };
     },
