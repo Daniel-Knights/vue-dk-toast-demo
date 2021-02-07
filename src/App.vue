@@ -33,13 +33,23 @@
     <div id="duration" class="property">
         <label>Duration:</label>
         <div id="duration-slider">
-            <input type="range" min="1000" max="100000" step="100" v-model.number="duration" />
+            <input
+                type="range"
+                min="1000"
+                max="100000"
+                step="100"
+                v-model.number="duration"
+            />
             {{ duration }}
         </div>
     </div>
     <div id="text" class="property">
         <label>Text:</label>
-        <input type="text" v-model="text" :class="{ valid: valid, invalid: valid === false }" />
+        <input
+            type="text"
+            v-model="text"
+            :class="{ valid: valid, invalid: valid === false }"
+        />
     </div>
     <form @submit.prevent="addRule()" id="styles" class="property">
         <label>Styles:</label>
@@ -57,10 +67,13 @@
     </form>
     <div class="property">
         <label>Slot-Left:</label>
-        <textarea v-model="slots.left" :class="{ valid: valid, invalid: valid === false }" />
+        <textarea
+            v-model="slots.left"
+            :class="{ valid: valid, invalid: valid === false }"
+        />
         <p>
-            Any valid HTML can go here. Fontawesome and Material Icons are loaded into this demo,
-            give it a try:
+            Any valid HTML can go here. Fontawesome and Material Icons are loaded into
+            this demo, give it a try:
             <code @click="copyIcon(0, 'left')" class="icon-examples"
                 >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
             >
@@ -76,7 +89,10 @@
     </div>
     <div class="property">
         <label>Slot-Right:</label>
-        <textarea v-model="slots.right" :class="{ valid: valid, invalid: valid === false }" />
+        <textarea
+            v-model="slots.right"
+            :class="{ valid: valid, invalid: valid === false }"
+        />
         <p>
             Same as <code class="code-note">slotLeft</code> but positioned to the right
             <code @click="copyIcon(0, 'right')" class="icon-examples"
@@ -91,6 +107,8 @@
 </template>
 
 <script>
+import { sanitize } from 'dompurify'
+
 export default {
     name: 'App',
 
@@ -104,48 +122,48 @@ export default {
             styleValue: '',
             text: '',
             slots: { left: '', right: '' },
-            valid: null,
-        };
+            valid: null
+        }
     },
 
     computed: {
         displayStyles: function() {
             return Object.keys(this.styles).map(style => {
-                return `${style}: ${this.styles[style]};`;
-            });
-        },
+                return `${style}: ${this.styles[style]};`
+            })
+        }
     },
 
     methods: {
         toast() {
-            if (!this.text && !this.slots.left && !this.slots.right) this.valid = false;
-            else this.valid = true;
+            if (!this.text && !this.slots.left && !this.slots.right) this.valid = false
+            else this.valid = true
 
             this.$toast(this.text, {
                 duration: this.duration,
                 styles: this.styles,
-                slotLeft: this.slots.left,
-                slotRight: this.slots.right,
-            });
+                slotLeft: sanitize(this.slots.left),
+                slotRight: sanitize(this.slots.right)
+            })
         },
         copyCode(e) {
-            navigator.clipboard.writeText(e.target.innerText);
-            this.$toast('Copied!');
+            navigator.clipboard.writeText(e.target.innerText)
+            this.$toast('Copied!')
         },
         copyIcon(library, pos) {
             this.slots[pos] =
                 library === 0
                     ? '<i class="fa fa-thumbs-up"></i>'
-                    : '<span class="material-icons">thumb_up</span>';
+                    : '<span class="material-icons">thumb_up</span>'
         },
         addRule() {
-            this.styles[this.styleProperty] = this.styleValue;
+            this.styles[this.styleProperty] = this.styleValue
         },
         filterRule(style) {
-            delete this.styles[style.split(':')[0]];
-        },
-    },
-};
+            delete this.styles[style.split(':')[0]]
+        }
+    }
+}
 </script>
 
 <style>
