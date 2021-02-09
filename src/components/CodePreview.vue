@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    name: 'App',
+    name: 'CodePreview',
 
     props: {
         text: { type: String, required: true },
