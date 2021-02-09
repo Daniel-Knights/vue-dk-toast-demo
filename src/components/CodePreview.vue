@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #code-preview {
     display: block;
     position: absolute;
@@ -78,38 +78,39 @@ export default {
     word-wrap: break-word;
     letter-spacing: 1px;
     border-radius: 5px;
-}
 
-#code-preview code {
-    cursor: pointer;
-    display: block;
-    position: fixed;
-    margin: 0 auto;
-    padding-top: 20px;
-    width: 400px;
-    hyphens: auto;
-    transform: translateY(-50%);
-}
+    code {
+        cursor: pointer;
+        display: block;
+        position: fixed;
+        margin: 0 auto;
+        padding-top: 20px;
+        width: 400px;
+        hyphens: auto;
+        transform: translateY(-50%);
 
-#code-preview div {
-    pointer-events: none;
-    display: block;
-    hyphens: auto;
-}
+        &::before {
+            content: '📋COPY';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: fit-content;
+            opacity: 0;
+            transform: translate(-50%, 0);
+            transition: all 0.15s;
+        }
 
-#code-preview code::before {
-    content: '📋COPY';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: fit-content;
-    opacity: 0;
-    transform: translate(-50%, 0);
-    transition: all 0.15s;
-}
-#code-preview code:hover::before {
-    opacity: 1;
-    transform: translate(-50%, -50%);
+        &:hover::before {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    div {
+        pointer-events: none;
+        display: block;
+        hyphens: auto;
+    }
 }
 
 .preview-inner {

@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
     display: grid;
     grid-template-columns: 45vw 45vw;
