@@ -1,127 +1,108 @@
 <template>
-    <h1>vue-dk-toast</h1>
+    <h1>🍞 VUE-DK-TOAST 🍞</h1>
 
-    <code id="code-preview" @click="copyCode($event)">
-        <div>this.$toast('{{ text }}', {</div>
-        <div class="preview-inner">
-            <div>duration: {{ duration }},</div>
-            <div>
-                styles: {
+    <main id="content">
+        <div id="duration" class="property">
+            <label>Duration:</label>
+            <div id="duration-slider">
+                <input
+                    type="range"
+                    min="1000"
+                    max="100000"
+                    step="100"
+                    v-model.number="duration"
+                />
+                <span>
+                    {{ duration }}
+                </span>
             </div>
-            <div class="preview-values">
-                <div v-for="style in displayStyles" :key="style">{{ style }}</div>
-            </div>
-            <div>
-                },
-            </div>
-            <div>
-                slotLeft: `
-            </div>
-            <div class="preview-values">{{ slots.left }}</div>
-            <div>`,</div>
-            <div>
-                slotRight: `
-            </div>
-            <div class="preview-values">{{ slots.right }}</div>
-            <div>`</div>
         </div>
-        <div>
-            });
-        </div>
-    </code>
-
-    <div id="duration" class="property">
-        <label>Duration:</label>
-        <div id="duration-slider">
+        <div id="text" class="property">
+            <label>Text:</label>
             <input
-                type="range"
-                min="1000"
-                max="100000"
-                step="100"
-                v-model.number="duration"
+                type="text"
+                v-model="text"
+                :class="{ valid: valid, invalid: valid === false }"
             />
-            {{ duration }}
         </div>
-    </div>
-    <div id="text" class="property">
-        <label>Text:</label>
-        <input
-            type="text"
-            v-model="text"
-            :class="{ valid: valid, invalid: valid === false }"
-        />
-    </div>
-    <form @submit.prevent="addRule()" id="styles" class="property">
-        <label>Styles:</label>
-        <div id="styles-inputs">
-            <input type="text" v-model="styleProperty" />:
-            <input type="text" v-model="styleValue" />;
-        </div>
-        <input type="submit" value="Add Rule" />
-        <div id="code-styles">
-            <div v-for="style in displayStyles" :key="style" class="code-style">
-                <code>{{ style }}</code
-                ><i @click="filterRule(style)" class="fa fa-times"></i>
+        <form @submit.prevent="addRule()" id="styles" class="property">
+            <label>Styles:</label>
+            <div id="styles-inputs">
+                <input type="text" v-model="styleProperty" />:
+                <input type="text" v-model="styleValue" />;
             </div>
+            <input type="submit" value="Add Rule" />
+            <div id="code-styles">
+                <div v-for="style in displayStyles" :key="style" class="code-style">
+                    <code>{{ style }}</code
+                    ><i @click="filterRule(style)" class="fa fa-times"></i>
+                </div>
+            </div>
+        </form>
+        <div class="property">
+            <label>Slot-Left:</label>
+            <textarea
+                v-model="slots.left"
+                :class="{ valid: valid, invalid: valid === false }"
+            />
+            <p>
+                Any valid HTML can go here. Fontawesome and Material Icons are loaded into
+                this demo, give it a try:
+                <code @click="copyIcon(0, 'left')" class="icon-examples"
+                    >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
+                >
+                <code @click="copyIcon(1, 'left')" class="icon-examples"
+                    >&lt;span class="material-icons">thumb_up&lt;/span></code
+                >
+                <small>
+                    Note: <code class="code-note">&lt;span&gt;</code> and
+                    <code class="code-note">&lt;i&gt;</code> are
+                    <code class="code-note">position: absolute;</code> by default.
+                </small>
+            </p>
         </div>
-    </form>
-    <div class="property">
-        <label>Slot-Left:</label>
-        <textarea
-            v-model="slots.left"
-            :class="{ valid: valid, invalid: valid === false }"
-        />
-        <p>
-            Any valid HTML can go here. Fontawesome and Material Icons are loaded into
-            this demo, give it a try:
-            <code @click="copyIcon(0, 'left')" class="icon-examples"
-                >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
-            >
-            <code @click="copyIcon(1, 'left')" class="icon-examples"
-                >&lt;span class="material-icons">thumb_up&lt;/span></code
-            >
-            <small>
-                Note: <code class="code-note">&lt;span&gt;</code> and
-                <code class="code-note">&lt;i&gt;</code> are
-                <code class="code-note">position: absolute;</code> by default.
-            </small>
-        </p>
-    </div>
-    <div class="property">
-        <label>Slot-Right:</label>
-        <textarea
-            v-model="slots.right"
-            :class="{ valid: valid, invalid: valid === false }"
-        />
-        <p>
-            Same as <code class="code-note">slotLeft</code> but positioned to the right
-            <code @click="copyIcon(0, 'right')" class="icon-examples"
-                >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
-            >
-            <code @click="copyIcon(1, 'right')" class="icon-examples"
-                >&lt;span class="material-icons">thumb_up&lt;/span></code
-            >
-        </p>
-    </div>
-    <button @click="toast()" id="create-toast">Create Toast</button>
+        <div class="property">
+            <label>Slot-Right:</label>
+            <textarea
+                v-model="slots.right"
+                :class="{ valid: valid, invalid: valid === false }"
+            />
+            <p>
+                Same as <code class="code-note">slotLeft</code> but positioned to the
+                right
+                <code @click="copyIcon(0, 'right')" class="icon-examples"
+                    >&lt;i class="fa fa-thumbs-up"&gt;&lt;/i&gt;</code
+                >
+                <code @click="copyIcon(1, 'right')" class="icon-examples"
+                    >&lt;span class="material-icons">thumb_up&lt;/span></code
+                >
+            </p>
+        </div>
+        <button @click="toast()" id="create-toast">CREATE TOAST</button>
+    </main>
+
+    <CodePreview :text="text" :duration="duration" :styles="styles" :slots="slots" />
 </template>
 
 <script>
 import { sanitize } from 'dompurify'
+import CodePreview from './components/CodePreview.vue'
 
 export default {
     name: 'App',
 
+    components: { CodePreview },
+
     data() {
         return {
-            duration: 1000,
+            duration: 5000,
             positionX: 'right',
             positionY: 'bottom',
             styles: {},
             styleProperty: '',
             styleValue: '',
-            text: '',
-            slots: { left: '', right: '' },
+            text: 'Hello there!',
+            slots: { left: '🍞', right: '🍞' },
             valid: null
         }
     },
@@ -146,10 +127,6 @@ export default {
                 slotRight: sanitize(this.slots.right)
             })
         },
-        copyCode(e) {
-            navigator.clipboard.writeText(e.target.innerText)
-            this.$toast('Copied!')
-        },
         copyIcon(library, pos) {
             this.slots[pos] =
                 library === 0
@@ -157,6 +134,8 @@ export default {
                     : '<span class="material-icons">thumb_up</span>'
         },
         addRule() {
+            if (!this.styleValue || !this.styleProperty) return
+
             this.styles[this.styleProperty] = this.styleValue
         },
         filterRule(style) {
@@ -168,87 +147,25 @@ export default {
 
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 45vw 45vw;
+    grid-template-rows: 100px auto;
+    justify-content: center;
+    margin: 40px 0;
 }
 
-input,
-textarea {
-    border: 1px solid rgba(0, 0, 0, 0.6);
-    border-radius: 2px;
-    resize: vertical;
-}
-button,
-[type='submit'] {
-    cursor: pointer;
-}
-input,
-button {
-    font: 18px Avenir, Helvetica, Arial, sans-serif;
+h1 {
+    grid-column: 1 / 3;
 }
 
 .property {
     display: flex;
     flex-direction: column;
     max-width: 500px;
-    margin: 40px auto;
-    padding: 20px;
-    border: 1px solid;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px -3px rgba(0, 0, 0, 0.8);
-}
-
-label {
-    width: 100%;
-    text-align: left;
-    font-size: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-#code-preview {
-    cursor: pointer;
-    position: fixed;
-    text-align: left;
-    top: 50%;
-    left: 50px;
-    transform: translateY(-50%);
-    max-width: calc((100vw - 700px) / 2);
-    text-overflow: ellipsis;
-    overflow: hidden;
+    margin: 20px auto;
     padding: 10px;
     border-radius: 5px;
-}
-#code-preview div {
-    pointer-events: none;
-    display: block;
-    hyphens: auto;
-}
-#code-preview:hover {
-    color: #6db8f5;
-    background: rgba(0, 0, 0, 0.8);
-}
-.preview-inner {
-    padding-left: 30px;
-}
-.preview-values {
-    max-width: 180px;
-    padding-left: 30px;
-}
-
-#duration-slider {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-#duration-slider input {
-    cursor: pointer;
-    flex: 1;
+    box-shadow: 0 1px 8px -2px rgb(0 0 0);
 }
 
 p {
@@ -281,7 +198,7 @@ p .code-note {
     width: 150px;
 }
 #styles-inputs input {
-    width: 44%;
+    width: 40%;
 }
 #code-styles {
     display: flex;
@@ -306,32 +223,18 @@ p .code-note {
     cursor: pointer;
     position: absolute;
     right: 0;
-    font-size: 14px;
+    font-size: 1em;
 }
 
 #create-toast {
     margin-bottom: 40px;
     width: 100%;
     max-width: 250px;
-    font-size: 20px;
 }
 
-.invalid {
-    border: 1px solid #ff0000;
-}
-.valid {
-    border: 1px solid #90ee90;
-}
-
-@media only screen and (max-width: 1140px) {
-    #code-preview {
-        left: 20px;
-        max-width: calc((100vw - 640px) / 2);
-    }
-}
 @media only screen and (max-width: 950px) {
-    #code-preview {
-        display: none;
+    #app {
+        grid-template-columns: 100%;
     }
 }
 </style>

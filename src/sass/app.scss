@@ -1,0 +1,66 @@
+@import 'slider';
+
+body {
+    margin: 0;
+    text-align: center;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(#7b6df5, #3350f1);
+    text-shadow: 0 1px rgba(46, 46, 46, 0.843);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    margin: 5px;
+    padding: 5px 10px;
+    font: 1.5em monospace;
+    letter-spacing: 1px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    resize: vertical;
+    outline: none;
+    transition: all 0.25s;
+
+    &:focus {
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.555);
+    }
+}
+
+button,
+[type='submit'] {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+
+    &:hover {
+        background-color: rgb(223, 223, 223);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.555);
+    }
+}
+
+button {
+    font: 1.5em monospace;
+}
+
+label {
+    width: 100%;
+    text-align: left;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.invalid {
+    border: 1px solid #ff0000;
+}
+.valid {
+    border: 1px solid #90ee90;
+}
