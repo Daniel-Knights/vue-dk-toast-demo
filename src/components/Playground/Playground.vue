@@ -108,15 +108,15 @@
                 >
             </p>
             <p>
-                Or a class of <code class="code-note">success</code> to make the
-                background green and text white:
+                Or a type of <code class="code-note">success</code> to make the background
+                green and text white:
                 <code @click="copyType('success')" class="icon-examples"
                     >&lt;div class="dk__toast dk__success"...</code
                 >
             </p>
             <p>
-                Or a class of <code class="code-note">passive</code> to make the
-                background blue and text white:
+                Or a type of <code class="code-note">passive</code> to make the background
+                blue and text white:
                 <code @click="copyType('passive')" class="icon-examples"
                     >&lt;div class="dk__toast dk__passive"...</code
                 >
