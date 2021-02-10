@@ -80,6 +80,48 @@
                 >
             </p>
         </div>
+        <div class="property">
+            <label>Class:</label>
+            <input
+                :value="className"
+                @input="$emit('update:class-name', $event.target.value)"
+                type="text"
+            />
+            <p>
+                <code @click="copyClass('huge')" class="icon-examples"
+                    >.huge { padding: 100px; }</code
+                >
+            </p>
+        </div>
+        <div class="property">
+            <label>Type:</label>
+            <input
+                :value="type"
+                @input="$emit('update:type', $event.target.value)"
+                type="text"
+            />
+            <p>
+                Add a type of <code class="code-note">error</code> to make the background
+                red and text white:
+                <code @click="copyType('error')" class="icon-examples"
+                    >&lt;div class="dk__toast dk__error"...</code
+                >
+            </p>
+            <p>
+                Or a class of <code class="code-note">success</code> to make the
+                background green and text white:
+                <code @click="copyType('success')" class="icon-examples"
+                    >&lt;div class="dk__toast dk__success"...</code
+                >
+            </p>
+            <p>
+                Or a class of <code class="code-note">passive</code> to make the
+                background blue and text white:
+                <code @click="copyType('passive')" class="icon-examples"
+                    >&lt;div class="dk__toast dk__passive"...</code
+                >
+            </p>
+        </div>
         <button @click="toast()" id="create-toast">CREATE TOAST</button>
     </main>
 </template>

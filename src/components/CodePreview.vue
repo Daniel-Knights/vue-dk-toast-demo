@@ -29,6 +29,12 @@
                     <div class="preview-values">{{ slots.right }}</div>
                     <div>`</div>
                 </div>
+                <div v-if="className">
+                    <div>class: {{ className }},</div>
+                </div>
+                <div v-if="type">
+                    <div>type: {{ type }},</div>
+                </div>
             </div>
             <div>
                 });
@@ -45,7 +51,9 @@ export default {
         text: { type: String, required: true },
         duration: { type: Number, required: true },
         styles: { type: Object, required: true },
-        slots: { type: Object, required: true }
+        slots: { type: Object, required: true },
+        className: { type: String, required: true },
+        type: { type: String, required: true }
     },
 
     computed: {

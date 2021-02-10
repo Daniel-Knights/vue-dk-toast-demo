@@ -8,7 +8,9 @@ export default {
         'update:text',
         'update:styles',
         'update:slotsLeft',
-        'update:slotsRight'
+        'update:slotsRight',
+        'update:class-name',
+        'update:type'
     ],
 
     props: {
@@ -16,7 +18,9 @@ export default {
         text: { type: String, required: true },
         styles: { type: Object, required: true },
         slotsLeft: { type: String, required: true },
-        slotsRight: { type: String, required: true }
+        slotsRight: { type: String, required: true },
+        className: { type: String, required: true },
+        type: { type: String, required: true }
     },
 
     data: () => ({
@@ -44,7 +48,9 @@ export default {
                 duration: this.duration,
                 styles: this.styles,
                 slotLeft: sanitize(this.slotsLeft),
-                slotRight: sanitize(this.slotsRight)
+                slotRight: sanitize(this.slotsRight),
+                class: this.className,
+                type: this.type
             })
         },
 
@@ -55,6 +61,14 @@ export default {
                     : '<span class="material-icons">thumb_up</span>'
 
             this.$emit(`update:slots${pos}`, icon)
+        },
+
+        copyClass(className) {
+            this.$emit('update:class-name', className)
+        },
+
+        copyType(type) {
+            this.$emit('update:type', type)
         },
 
         addRule() {
