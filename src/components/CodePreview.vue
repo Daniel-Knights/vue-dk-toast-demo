@@ -3,7 +3,7 @@
         <code @click="copyCode($event)">
             <div>this.$toast('{{ text }}', {</div>
             <div class="preview-inner">
-                <div>duration: {{ duration }},</div>
+                <div>duration: {{ duration || false }},</div>
                 <div v-if="Object.keys(styles).length">
                     <div>
                         styles: {
@@ -30,10 +30,19 @@
                     <div>`</div>
                 </div>
                 <div v-if="className">
-                    <div>class: {{ className }},</div>
+                    <div>class: '{{ className }}',</div>
                 </div>
                 <div v-if="type">
-                    <div>type: {{ type }},</div>
+                    <div>type: '{{ type }}',</div>
+                </div>
+                <div v-if="positionX">
+                    <div>positionX: '{{ positionX }}',</div>
+                </div>
+                <div v-if="positionY">
+                    <div>positionY: '{{ positionY }}',</div>
+                </div>
+                <div v-if="disableClick">
+                    <div>disableClick: {{ disableClick }},</div>
                 </div>
             </div>
             <div>
@@ -53,7 +62,10 @@ export default {
         styles: { type: Object, required: true },
         slots: { type: Object, required: true },
         className: { type: String, required: true },
-        type: { type: String, required: true }
+        type: { type: String, required: true },
+        positionX: { type: String, required: true },
+        positionY: { type: String, required: true },
+        disableClick: { type: Boolean, required: true }
     },
 
     computed: {

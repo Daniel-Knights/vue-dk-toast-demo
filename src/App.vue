@@ -6,8 +6,11 @@
         v-model:styles="styles"
         v-model:slotsLeft="slots.left"
         v-model:slotsRight="slots.right"
-        v-model:class-name="className"
+        v-model:className="className"
         v-model:type="type"
+        v-model:positionX="positionX"
+        v-model:positionY="positionY"
+        v-model:disableClick="disableClick"
     />
     <CodePreview
         :text="text"
@@ -16,6 +19,9 @@
         :slots="slots"
         :className="className"
         :type="type"
+        :positionX="positionX"
+        :positionY="positionY"
+        :disableClick="disableClick"
     />
 </template>
 
@@ -34,7 +40,10 @@ export default {
         text: 'Hello there!',
         slots: { left: '🍞', right: '🍞' },
         className: 'toast',
-        type: ''
+        type: '',
+        positionX: '',
+        positionY: '',
+        disableClick: false
     })
 }
 </script>

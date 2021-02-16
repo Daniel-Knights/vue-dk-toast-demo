@@ -9,8 +9,11 @@ export default {
         'update:styles',
         'update:slotsLeft',
         'update:slotsRight',
-        'update:class-name',
-        'update:type'
+        'update:className',
+        'update:type',
+        'update:positionX',
+        'update:positionY',
+        'update:disableClick'
     ],
 
     props: {
@@ -20,12 +23,13 @@ export default {
         slotsLeft: { type: String, required: true },
         slotsRight: { type: String, required: true },
         className: { type: String, required: true },
-        type: { type: String, required: true }
+        type: { type: String, required: true },
+        positionX: { type: String, required: true },
+        positionY: { type: String, required: true },
+        disableClick: { type: Boolean, required: true }
     },
 
     data: () => ({
-        positionX: 'right',
-        positionY: 'bottom',
         styleProperty: '',
         styleValue: '',
         valid: null
@@ -45,12 +49,15 @@ export default {
             else this.valid = true
 
             this.$toast(this.text, {
-                duration: this.duration,
+                duration: this.duration || false,
                 styles: this.styles,
                 slotLeft: sanitize(this.slotsLeft),
                 slotRight: sanitize(this.slotsRight),
                 class: this.className,
-                type: this.type
+                type: this.type,
+                positionX: this.positionX,
+                positionY: this.positionY,
+                disableClick: this.disableClick
             })
         },
 
@@ -64,7 +71,7 @@ export default {
         },
 
         copyClass(className) {
-            this.$emit('update:class-name', className)
+            this.$emit('update:className', className)
         },
 
         copyType(type) {

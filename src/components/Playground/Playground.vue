@@ -1,23 +1,23 @@
 <template>
     <main id="content">
         <div id="duration" class="property">
-            <label>Duration:</label>
+            <label>duration:</label>
             <div id="duration-slider">
                 <input
                     type="range"
-                    min="1000"
+                    min="0"
                     max="100000"
                     step="100"
                     :value="duration"
                     @input="$emit('update:duration', $event.target.value)"
                 />
                 <span>
-                    {{ duration }}
+                    {{ duration || false }}
                 </span>
             </div>
         </div>
         <div id="text" class="property">
-            <label>Text:</label>
+            <label>text:</label>
             <input
                 type="text"
                 :value="text"
@@ -26,7 +26,7 @@
             />
         </div>
         <form @submit.prevent="addRule()" id="styles" class="property">
-            <label>Styles:</label>
+            <label>styles:</label>
             <div id="styles-inputs">
                 <input type="text" v-model="styleProperty" />:
                 <input type="text" v-model="styleValue" />;
@@ -40,7 +40,7 @@
             </div>
         </form>
         <div class="property">
-            <label>Slot-Left:</label>
+            <label>slotLeft:</label>
             <textarea
                 :value="slotsLeft"
                 @input="$emit('update:slotsLeft', $event.target.value)"
@@ -63,7 +63,7 @@
             </p>
         </div>
         <div class="property">
-            <label>Slot-Right:</label>
+            <label>slotRight:</label>
             <textarea
                 :value="slotsRight"
                 @input="$emit('update:slotsRight', $event.target.value)"
@@ -81,10 +81,10 @@
             </p>
         </div>
         <div class="property">
-            <label>Class:</label>
+            <label>class:</label>
             <input
                 :value="className"
-                @input="$emit('update:class-name', $event.target.value)"
+                @input="$emit('update:className', $event.target.value)"
                 type="text"
             />
             <p>
@@ -94,7 +94,7 @@
             </p>
         </div>
         <div class="property">
-            <label>Type:</label>
+            <label>type:</label>
             <input
                 :value="type"
                 @input="$emit('update:type', $event.target.value)"
@@ -121,6 +121,35 @@
                     >&lt;div class="dk__toast dk__passive"...</code
                 >
             </p>
+        </div>
+        <div class="property">
+            <label>positionX:</label>
+            <select @change="$emit('update:positionX', $event.target.value)">
+                <option value="left">left</option>
+                <option value="center">center</option>
+                <option value="right" selected>right</option>
+            </select>
+        </div>
+        <div class="property">
+            <label>positionY:</label>
+            <select @change="$emit('update:positionY', $event.target.value)">
+                <option value="top">top</option>
+                <option value="bottom" selected>bottom</option>
+            </select>
+        </div>
+        <div class="property">
+            <label>disableClick:</label>
+            <select
+                @change="
+                    $emit(
+                        'update:disableClick',
+                        $event.target.value === 'true' ? true : false
+                    )
+                "
+            >
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+            </select>
         </div>
         <button @click="toast()" id="create-toast">CREATE TOAST</button>
     </main>
