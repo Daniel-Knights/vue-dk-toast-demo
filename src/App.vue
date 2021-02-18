@@ -11,6 +11,8 @@
         v-model:positionX="positionX"
         v-model:positionY="positionY"
         v-model:disableClick="disableClick"
+        v-model:href="link.href"
+        v-model:targetBlank="link.targetBlank"
     />
     <CodePreview
         :text="text"
@@ -22,6 +24,7 @@
         :positionX="positionX"
         :positionY="positionY"
         :disableClick="disableClick"
+        :link="link"
     />
 </template>
 
@@ -43,7 +46,8 @@ export default {
         type: '',
         positionX: '',
         positionY: '',
-        disableClick: false
+        disableClick: false,
+        link: { href: '', targetBlank: false }
     })
 }
 </script>

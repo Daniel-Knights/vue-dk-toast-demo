@@ -151,6 +151,27 @@
                 <option value="false" selected>false</option>
             </select>
         </div>
+        <div class="property">
+            <label>link:</label>
+            <div class="full-width">
+                href:
+                <input @input="$emit('update:href', $event.target.value)" type="text" />
+            </div>
+            <div class="full-width">
+                targetBlank:
+                <select
+                    @change="
+                        $emit(
+                            'update:targetBlank',
+                            $event.target.value === 'true' ? true : false
+                        )
+                    "
+                >
+                    <option value="true">true</option>
+                    <option value="false" selected>false</option>
+                </select>
+            </div>
+        </div>
         <button @click="toast()" id="create-toast">CREATE TOAST</button>
     </main>
 </template>

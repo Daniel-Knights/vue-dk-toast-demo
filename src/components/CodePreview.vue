@@ -44,6 +44,14 @@
                 <div v-if="disableClick">
                     <div>disableClick: {{ disableClick }},</div>
                 </div>
+                <div v-if="link.href">
+                    <div>
+                        link: {
+                    </div>
+                    <div class="preview-values">href: '{{ link.href }}',</div>
+                    <div class="preview-values">targetBlank: {{ link.targetBlank }}</div>
+                    <div>}</div>
+                </div>
             </div>
             <div>
                 });
@@ -65,7 +73,8 @@ export default {
         type: { type: String, required: true },
         positionX: { type: String, required: true },
         positionY: { type: String, required: true },
-        disableClick: { type: Boolean, required: true }
+        disableClick: { type: Boolean, required: true },
+        link: { type: Object, required: true }
     },
 
     computed: {

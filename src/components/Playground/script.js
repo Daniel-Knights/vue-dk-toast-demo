@@ -13,7 +13,9 @@ export default {
         'update:type',
         'update:positionX',
         'update:positionY',
-        'update:disableClick'
+        'update:disableClick',
+        'update:href',
+        'update:targetBlank'
     ],
 
     props: {
@@ -26,7 +28,9 @@ export default {
         type: { type: String, required: true },
         positionX: { type: String, required: true },
         positionY: { type: String, required: true },
-        disableClick: { type: Boolean, required: true }
+        disableClick: { type: Boolean, required: true },
+        href: { type: String, required: true },
+        targetBlank: { type: Boolean, required: true }
     },
 
     data: () => ({
@@ -57,7 +61,11 @@ export default {
                 type: this.type,
                 positionX: this.positionX,
                 positionY: this.positionY,
-                disableClick: this.disableClick
+                disableClick: this.disableClick,
+                link: {
+                    href: this.href,
+                    targetBlank: this.targetBlank
+                }
             })
         },
 
