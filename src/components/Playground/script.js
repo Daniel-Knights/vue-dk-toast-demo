@@ -1,105 +1,105 @@
-import { sanitize } from 'dompurify'
+import DOMPurify from 'dompurify';
 
 export default {
-    name: 'Playground',
+  name: 'Playground',
 
-    emits: [
-        'update:duration',
-        'update:text',
-        'update:styles',
-        'update:slotsLeft',
-        'update:slotsRight',
-        'update:className',
-        'update:type',
-        'update:positionX',
-        'update:positionY',
-        'update:disableClick',
-        'update:href',
-        'update:targetBlank'
-    ],
+  emits: [
+    'update:duration',
+    'update:text',
+    'update:styles',
+    'update:slotsLeft',
+    'update:slotsRight',
+    'update:className',
+    'update:type',
+    'update:positionX',
+    'update:positionY',
+    'update:disableClick',
+    'update:href',
+    'update:targetBlank',
+  ],
 
-    props: {
-        duration: { type: Number, required: true },
-        text: { type: String, required: true },
-        styles: { type: Object, required: true },
-        slotsLeft: { type: String, required: true },
-        slotsRight: { type: String, required: true },
-        className: { type: String, required: true },
-        type: { type: String, required: true },
-        positionX: { type: String, required: true },
-        positionY: { type: String, required: true },
-        disableClick: { type: Boolean, required: true },
-        href: { type: String, required: true },
-        targetBlank: { type: Boolean, required: true }
+  props: {
+    duration: { type: Number, required: true },
+    text: { type: String, required: true },
+    styles: { type: Object, required: true },
+    slotsLeft: { type: String, required: true },
+    slotsRight: { type: String, required: true },
+    className: { type: String, required: true },
+    type: { type: String, required: true },
+    positionX: { type: String, required: true },
+    positionY: { type: String, required: true },
+    disableClick: { type: Boolean, required: true },
+    href: { type: String, required: true },
+    targetBlank: { type: Boolean, required: true },
+  },
+
+  data: () => ({
+    styleProperty: '',
+    styleValue: '',
+    valid: null,
+  }),
+
+  computed: {
+    displayStyles: function() {
+      return Object.keys(this.styles).map((style) => {
+        return `${style}: ${this.styles[style]};`;
+      });
+    },
+  },
+
+  methods: {
+    toast() {
+      if (!this.text && !this.slotsLeft && !this.slotsRight) this.valid = false;
+      else this.valid = true;
+
+      this.$toast(this.text, {
+        duration: this.duration || false,
+        styles: this.styles,
+        slotLeft: DOMPurify.sanitize(this.slotsLeft),
+        slotRight: DOMPurify.sanitize(this.slotsRight),
+        class: this.className,
+        type: this.type,
+        positionX: this.positionX,
+        positionY: this.positionY,
+        disableClick: this.disableClick,
+        link: {
+          href: this.href,
+          targetBlank: this.targetBlank,
+        },
+      });
     },
 
-    data: () => ({
-        styleProperty: '',
-        styleValue: '',
-        valid: null
-    }),
+    copyIcon(library, pos) {
+      const icon =
+        library === 0
+          ? '<i class="fa fa-thumbs-up"></i>'
+          : '<span class="material-icons">thumb_up</span>';
 
-    computed: {
-        displayStyles: function() {
-            return Object.keys(this.styles).map(style => {
-                return `${style}: ${this.styles[style]};`
-            })
-        }
+      this.$emit(`update:slots${pos}`, icon);
     },
 
-    methods: {
-        toast() {
-            if (!this.text && !this.slotsLeft && !this.slotsRight) this.valid = false
-            else this.valid = true
+    copyClass(className) {
+      this.$emit('update:className', className);
+    },
 
-            this.$toast(this.text, {
-                duration: this.duration || false,
-                styles: this.styles,
-                slotLeft: sanitize(this.slotsLeft),
-                slotRight: sanitize(this.slotsRight),
-                class: this.className,
-                type: this.type,
-                positionX: this.positionX,
-                positionY: this.positionY,
-                disableClick: this.disableClick,
-                link: {
-                    href: this.href,
-                    targetBlank: this.targetBlank
-                }
-            })
-        },
+    copyType(type) {
+      this.$emit('update:type', type);
+    },
 
-        copyIcon(library, pos) {
-            const icon =
-                library === 0
-                    ? '<i class="fa fa-thumbs-up"></i>'
-                    : '<span class="material-icons">thumb_up</span>'
+    addRule() {
+      if (!this.styleValue || !this.styleProperty) return;
 
-            this.$emit(`update:slots${pos}`, icon)
-        },
+      const tempStyles = this.styles;
+      tempStyles[this.styleProperty] = this.styleValue;
 
-        copyClass(className) {
-            this.$emit('update:className', className)
-        },
+      this.$emit('update:styles', tempStyles);
+    },
 
-        copyType(type) {
-            this.$emit('update:type', type)
-        },
+    filterRule(style) {
+      const tempStyles = this.styles;
 
-        addRule() {
-            if (!this.styleValue || !this.styleProperty) return
-
-            const tempStyles = this.styles
-            tempStyles[this.styleProperty] = this.styleValue
-
-            this.$emit('update:styles', tempStyles)
-        },
-
-        filterRule(style) {
-            const tempStyles = this.styles
-
-            delete tempStyles[style.split(':')[0]]
-            this.$emit('update:styles', tempStyles)
-        }
-    }
-}
+      delete tempStyles[style.split(':')[0]];
+      this.$emit('update:styles', tempStyles);
+    },
+  },
+};
