@@ -10,7 +10,7 @@
     "core-js": "^3.20.0",
     "dompurify": "^2.3.4",
     "vue": "^3.2.26",
-    "vue-dk-toast": "^2.2.2"
+    "vue-dk-toast": "^2.2.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",
