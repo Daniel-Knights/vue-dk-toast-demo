@@ -40,7 +40,7 @@ export default {
   }),
 
   computed: {
-    displayStyles: function() {
+    displayStyles: function () {
       return Object.keys(this.styles).map((style) => {
         return `${style}: ${this.styles[style]};`;
       });
@@ -57,7 +57,7 @@ export default {
         styles: this.styles,
         slotLeft: DOMPurify.sanitize(this.slotsLeft),
         slotRight: DOMPurify.sanitize(this.slotsRight),
-        class: this.className,
+        class: this.className.split(' '),
         type: this.type,
         positionX: this.positionX,
         positionY: this.positionY,
